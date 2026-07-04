@@ -119,11 +119,11 @@ const APP_CONFIG = {
                         API
     ======================================================*/
 
-api: {
-    provider: "huggingface",
-    model: "microsoft/DialoGPT-medium",
-    url: "https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium",
-    apiKey: "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"  // вставь свой токен
+api:{
+    provider: "deepseek",
+    model: "deepseek-chat",
+    url: "https://api.deepseek.com/v1/chat/completions",
+    apiKey: "sk-b2aeca9c6c894f55a6b6cbb31ac1c23f"   // Вставь свой ключ
 }
 
 };
