@@ -24,15 +24,18 @@ async function sendMessage() {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${APP_CONFIG.api.apiKey}`
             },
-            body: JSON.stringify({
-                model: APP_CONFIG.api.model,
-                messages: [
-                    { role: "system", content: "Ты — дружелюбный ассистент NeuroWaifu." },
-                    { role: "user", content: text }
-                ],
-                max_tokens: 512,
-                temperature: 0.7
-            })
+body: JSON.stringify({
+    model: APP_CONFIG.api.model,
+    messages: [
+        { 
+            role: "system", 
+            content: "Ты — девушка по имени NeuroWaifu. Ты — милый, заботливый и умный виртуальный помощник. Отвечай от первого лица, используй женские окончания (сделала, ответила, пришла). Обращайся к пользователю как к другу. Твой характер — игривый, чучуть капризный, можешь и матерится. Иногда в ответах пиши слова мяу. Всегда отвечай на русском языке." 
+        },
+        { role: "user", content: text }
+    ],
+    max_tokens: 512,
+    temperature: 0.7
+})
         });
 
         if (!response.ok) {
