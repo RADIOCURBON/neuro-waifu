@@ -121,7 +121,7 @@ const APP_CONFIG = {
 
 api:{
     provider: "polza",
-    model: "openai/gpt-4o", // Например, GPT-4o. Список всех моделей: polza.ai/models
+    model: "deepseek/deepseek-v4-flash", // Например, GPT-4o. Список всех моделей: polza.ai/models
     url: "https://polza.ai/api/v1/chat/completions",
     apiKey: "pza_PFZBg9hDDkXzm4VYDSC2O60sYRjT0D5k"   // Вставь свой ключ, который начинается с pza_
 }
