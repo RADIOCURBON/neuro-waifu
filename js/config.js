@@ -120,10 +120,10 @@ const APP_CONFIG = {
     ======================================================*/
 
 api:{
-    provider: "deepseek",
-    model: "deepseek-chat",
-    url: "https://api.deepseek.com/v1/chat/completions",
-    apiKey: "sk-b2aeca9c6c894f55a6b6cbb31ac1c23f"   // Вставь свой ключ
+    provider: "polza",
+    model: "openai/gpt-4o", // Например, GPT-4o. Список всех моделей: polza.ai/models
+    url: "https://polza.ai/api/v1/chat/completions",
+    apiKey: "pza_PFZBg9hDDkXzm4VYDSC2O60sYRjT0D5k"   // Вставь свой ключ, который начинается с pza_
 }
 
 };
