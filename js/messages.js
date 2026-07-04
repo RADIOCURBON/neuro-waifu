@@ -1,5 +1,5 @@
 /* ==========================================================
-                        ЭЛЕМЕНТЫ
+                    ЭЛЕМЕНТЫ
 ==========================================================*/
 
 const messagesContainer = document.getElementById("messages");
@@ -17,39 +17,40 @@ async function sendMessage() {
     addMessageToChat("user", text);
     messageInput.value = "";
 
-    // Имитация ответа AI (замените на реальный API)
-    // Отправляем запрос к Hugging Face
-try {
-    const response = await fetch(
-        "https://api-inference.huggingface.co/models/microsoft/DialoGPT-medium", // модель чата
-        {
+    // Индикатор загрузки (опционально)
+    // addMessageToChat("assistant", "⏳ Думаю...");
+
+    try {
+        const response = await fetch(APP_CONFIG.api.url, {
             method: "POST",
             headers: {
-                "Authorization": `Bearer ${APP_CONFIG.api.apiKey}`, // твой ключ
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${APP_CONFIG.api.apiKey}`
             },
             body: JSON.stringify({
-                inputs: text,
-                parameters: { max_length: 150 }
+                model: APP_CONFIG.api.model,
+                messages: [
+                    { role: "system", content: "Ты — полезный и дружелюбный ассистент NeuroWaifu." },
+                    { role: "user", content: text }
+                ],
+                max_tokens: 512,
+                temperature: 0.7
             })
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`Ошибка API: ${response.status} ${errorText}`);
         }
-    );
 
-    if (!response.ok) {
-        throw new Error(`Ошибка API: ${response.status}`);
+        const data = await response.json();
+        const aiReply = data.choices?.[0]?.message?.content || "Не удалось получить ответ.";
+        
+        addMessageToChat("assistant", aiReply);
+    } catch (error) {
+        console.error("Ошибка нейросети:", error);
+        addMessageToChat("assistant", "❌ Извини, нейросеть сейчас недоступна. Попробуй позже.");
     }
-
-    const data = await response.json();
-    // Hugging Face возвращает массив, берём первый ответ
-    const aiReply = data[0]?.generated_text || "Не удалось получить ответ.";
-    // Обрезаем, чтобы не повторялся наш запрос (иногда модель повторяет)
-    const cleanReply = aiReply.replace(text, "").trim() || aiReply;
-
-    addMessageToChat("assistant", cleanReply);
-} catch (error) {
-    console.error("Ошибка нейросети:", error);
-    addMessageToChat("assistant", "❌ Извини, нейросеть сейчас недоступна.");
-}
 }
 
 /* ==========================================================
