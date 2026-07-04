@@ -1,0 +1,61 @@
+/* ==========================================================
+                    SCROLLBAR.CSS
+            Минималистичный скроллбар
+==========================================================*/
+
+
+/* ==========================================================
+                WEBKIT (Chrome / Edge / Safari)
+==========================================================*/
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+    height:8px;
+
+}
+
+
+/* фон трека */
+
+::-webkit-scrollbar-track{
+
+    background:transparent;
+
+}
+
+
+/* сам ползунок */
+
+::-webkit-scrollbar-thumb{
+
+    background:rgba(255,255,255,.08);
+
+    border-radius:999px;
+
+    transition:background var(--transition-fast);
+
+}
+
+
+/* hover эффект */
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:rgba(255,255,255,.18);
+
+}
+
+
+/* ==========================================================
+                    FIREFOX
+==========================================================*/
+
+*{
+
+    scrollbar-width:thin;
+
+    scrollbar-color:rgba(255,255,255,.12) transparent;
+
+}/* scrollbar.css */

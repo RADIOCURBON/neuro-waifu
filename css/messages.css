@@ -1,0 +1,104 @@
+/* ==========================================================
+                    MESSAGES.CSS
+            Сообщения пользователя и AI
+==========================================================*/
+
+/* ==========================================================
+                    КОНТЕЙНЕР СООБЩЕНИЙ
+==========================================================*/
+
+.message {
+    align-items: stretch;
+    display: flex;
+     width: 100%;
+    margin-bottom: var(--space-16);
+    animation: messageAppear .2s ease;
+    width: 100%; /* блок сужается по содержимому */
+
+}
+
+/* ==========================================================
+                    ОБЩИЙ БЛОК ТЕКСТА
+==========================================================*/
+
+.message-content {
+    padding: 14px 16px;
+    border-radius: var(--radius-large);
+    font-size: 15px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+   max-width: 80%;
+    width: auto;/* чтобы не растягивался на всю ширину */
+}
+
+/* ==========================================================
+                    USER MESSAGE
+==========================================================*/
+
+.message.user {
+    justify-content: flex-end;
+}
+
+.message.user .message-content {
+    background: rgba(255,255,255,.06);
+    color: var(--color-text);
+    border-bottom-right-radius: 6px;
+}
+
+/* ==========================================================
+                    AI MESSAGE
+==========================================================*/
+
+.message.assistant {
+    justify-content: flex-start;
+}
+
+.message.assistant .message-content {
+    background: var(--color-surface);
+    color: var(--color-text);
+    border-bottom-left-radius: 6px;
+    border: 1px solid var(--color-border);
+}
+
+/* ==========================================================
+                    АНИМАЦИЯ ПОЯВЛЕНИЯ
+==========================================================*/
+
+@keyframes messageAppear {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================
+                    ПУСТОЕ СОСТОЯНИЕ
+==========================================================*/
+
+.messages-empty {
+    text-align: center;
+    color: var(--color-text-secondary);
+    margin-top: 120px;
+    font-size: 14px;
+}
+
+/* ==========================================================
+                    SCROLL ПОВЕДЕНИЕ
+==========================================================*/
+
+.messages {
+    scroll-behavior: smooth;
+}
+
+/* ==========================================================
+                    HOVER (будущее расширение)
+==========================================================*/
+
+.message-content:hover {
+    filter: brightness(1.05);
+}

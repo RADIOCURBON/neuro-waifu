@@ -1,0 +1,14 @@
+/* style.css */
+@import url("reset.css");
+@import url("variables.css");
+@import url("layout.css");
+@import url("sidebar.css");
+@import url("panels.css");   /* <-- добавить */
+@import url("chat.css");
+@import url("messages.css");
+@import url("prompt.css");
+@import url("menu.css");
+@import url("buttons.css");
+@import url("animations.css");
+@import url("scrollbar.css");
+@import url("responsive.css");

@@ -1,0 +1,224 @@
+/* ==========================================================
+                        BUTTONS.CSS
+                Единый стиль всех кнопок
+==========================================================*/
+
+
+/* ==========================================================
+                    БАЗОВАЯ КНОПКА
+==========================================================*/
+
+button{
+
+    font-family:var(--font-main);
+
+}
+
+
+/* ==========================================================
+                    ICON BUTTON (универсальная)
+==========================================================*/
+
+.icon-button{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    color:var(--color-text);
+
+    transition:
+
+        background var(--transition-fast),
+
+        transform var(--transition-fast),
+
+        color var(--transition-fast);
+
+}
+
+
+/* hover */
+
+.icon-button:hover{
+
+    background:rgba(255,255,255,.06);
+
+}
+
+
+/* active */
+
+.icon-button:active{
+
+    transform:scale(.92);
+
+}
+
+
+/* ==========================================================
+                    PRIMARY BUTTON
+==========================================================*/
+
+.button-primary{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:0 var(--space-16);
+
+    height:42px;
+
+    border-radius:var(--radius-medium);
+
+    background:var(--color-accent);
+
+    color:#000;
+
+    font-weight:600;
+
+    transition:
+
+        transform var(--transition-fast),
+
+        filter var(--transition-fast);
+
+}
+
+
+.button-primary:hover{
+
+    filter:brightness(1.1);
+
+}
+
+
+.button-primary:active{
+
+    transform:scale(.96);
+
+}
+
+
+/* ==========================================================
+                    SECONDARY BUTTON
+==========================================================*/
+
+.button-secondary{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:0 var(--space-16);
+
+    height:42px;
+
+    border-radius:var(--radius-medium);
+
+    background:transparent;
+
+    border:1px solid var(--color-border);
+
+    color:var(--color-text);
+
+    transition:
+
+        background var(--transition-fast),
+
+        border-color var(--transition-fast),
+
+        transform var(--transition-fast);
+
+}
+
+
+.button-secondary:hover{
+
+    background:rgba(255,255,255,.05);
+
+    border-color:rgba(255,255,255,.15);
+
+}
+
+
+.button-secondary:active{
+
+    transform:scale(.96);
+
+}
+
+
+/* ==========================================================
+                    DANGER BUTTON
+==========================================================*/
+
+.button-danger{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:0 var(--space-16);
+
+    height:42px;
+
+    border-radius:var(--radius-medium);
+
+    background:rgba(255,0,0,.08);
+
+    color:#ff5e5e;
+
+    transition:
+
+        background var(--transition-fast),
+
+        transform var(--transition-fast);
+
+}
+
+
+.button-danger:hover{
+
+    background:rgba(255,0,0,.14);
+
+}
+
+
+.button-danger:active{
+
+    transform:scale(.96);
+
+}
+
+
+/* ==========================================================
+                    SMALL BUTTON
+==========================================================*/
+
+.button-small{
+
+    height:34px;
+
+    padding:0 var(--space-12);
+
+    font-size:13px;
+
+    border-radius:var(--radius-small);
+
+}/* buttons.css */

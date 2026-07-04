@@ -1,0 +1,217 @@
+/* ==========================================================
+                        PROMPT.CSS
+                Поле ввода сообщения
+==========================================================*/
+
+
+/* ==========================================================
+                    ОБЩИЙ КОНТЕЙНЕР
+==========================================================*/
+
+.prompt{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:var(--space-12);
+
+    padding:var(--space-12);
+
+    background:rgba(16,16,16,.75);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid var(--color-border);
+
+    border-radius:var(--radius-xl);
+
+    box-shadow:var(--shadow-medium);
+
+}
+
+
+/* ==========================================================
+                    INPUT
+==========================================================*/
+
+.prompt input{
+
+    flex:1;
+
+    background:transparent;
+
+    border:none;
+
+    outline:none;
+
+    color:var(--color-text);
+
+    font-size:15px;
+
+    padding:var(--space-8) var(--space-12);
+
+}
+
+
+/* ==========================================================
+                PLACEHOLDER
+==========================================================*/
+
+.prompt input::placeholder{
+
+    color:var(--color-text-secondary);
+
+}
+
+
+/* ==========================================================
+                    КНОПКИ
+==========================================================*/
+
+.icon-button{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:transparent;
+
+    transition:
+
+        background var(--transition-fast),
+
+        transform var(--transition-fast);
+
+}
+
+
+.icon-button:hover{
+
+    background:rgba(255,255,255,.06);
+
+}
+
+
+.icon-button:active{
+
+    transform:scale(.92);
+
+}
+
+
+/* ==========================================================
+                    ОТПРАВКА
+==========================================================*/
+
+.send-button{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:var(--color-accent);
+
+    color:#000;
+
+    font-weight:600;
+
+    transition:
+
+        transform var(--transition-fast),
+
+        filter var(--transition-fast);
+
+}
+
+
+.send-button:hover{
+
+    filter:brightness(1.1);
+
+}
+
+
+.send-button:active{
+
+    transform:scale(.92);
+
+}
+
+
+/* ==========================================================
+                    ПРИКРЕПЛЕНИЕ
+==========================================================*/
+
+.attach-button{
+
+    width:42px;
+
+    height:42px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:transparent;
+
+    color:var(--color-text);
+
+    transition:
+
+        background var(--transition-fast),
+
+        transform var(--transition-fast);
+
+}
+
+
+.attach-button:hover{
+
+    background:rgba(255,255,255,.06);
+
+}
+
+
+.attach-button:active{
+
+    transform:scale(.92);
+
+}
+
+
+/* ==========================================================
+                    АДАПТАЦИЯ
+==========================================================*/
+
+@media (max-width:900px){
+
+    .prompt{
+
+        width:100%;
+
+        border-radius:var(--radius-large);
+
+    }
+
+}/* prompt.css */

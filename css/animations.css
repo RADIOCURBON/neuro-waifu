@@ -1,0 +1,223 @@
+/* ==========================================================
+                    ANIMATIONS.CSS
+            Микро-анимации интерфейса NeuroWaifu
+==========================================================*/
+
+
+/* ==========================================================
+                    FADE IN (общий)
+==========================================================*/
+
+.fade-in{
+
+    animation:fadeIn .25s ease forwards;
+
+}
+
+@keyframes fadeIn{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(6px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+
+/* ==========================================================
+                    SCALE IN (для меню / попапов)
+==========================================================*/
+
+.scale-in{
+
+    animation:scaleIn .18s var(--transition-smooth) forwards;
+
+}
+
+@keyframes scaleIn{
+
+    from{
+
+        opacity:0;
+
+        transform:scale(.95);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:scale(1);
+
+    }
+
+}
+
+
+/* ==========================================================
+                    SLIDE LEFT (sidebar hide/show)
+==========================================================*/
+
+.slide-left{
+
+    animation:slideLeft .3s var(--transition-smooth) forwards;
+
+}
+
+@keyframes slideLeft{
+
+    from{
+
+        transform:translateX(-10px);
+
+        opacity:0;
+
+    }
+
+    to{
+
+        transform:translateX(0);
+
+        opacity:1;
+
+    }
+
+}
+
+
+/* ==========================================================
+                    MESSAGE APPEAR (чат)
+==========================================================*/
+
+.message-appear{
+
+    animation:messageAppear .22s ease;
+
+}
+
+@keyframes messageAppear{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(8px);
+
+        filter:blur(2px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+        filter:blur(0);
+
+    }
+
+}
+
+
+/* ==========================================================
+                    BUTTON PRESS FEEL
+==========================================================*/
+
+.press{
+
+    transition:transform .1s ease;
+
+}
+
+.press:active{
+
+    transform:scale(.96);
+
+}
+
+
+/* ==========================================================
+                    SHIMMER LOADING (будущее AI ответов)
+==========================================================*/
+
+.shimmer{
+
+    background:linear-gradient(
+
+        90deg,
+
+        rgba(255,255,255,.03) 0%,
+
+        rgba(255,255,255,.08) 50%,
+
+        rgba(255,255,255,.03) 100%
+
+    );
+
+    background-size:200% 100%;
+
+    animation:shimmer 1.2s infinite linear;
+
+}
+
+@keyframes shimmer{
+
+    0%{
+
+        background-position:200% 0;
+
+    }
+
+    100%{
+
+        background-position:-200% 0;
+
+    }
+
+}
+
+
+/* ==========================================================
+                    FLOAT (легкое движение UI)
+==========================================================*/
+
+.float{
+
+    animation:float 4s ease-in-out infinite;
+
+}
+
+@keyframes float{
+
+    0%{
+
+        transform:translateY(0px);
+
+    }
+
+    50%{
+
+        transform:translateY(-3px);
+
+    }
+
+    100%{
+
+        transform:translateY(0px);
+
+    }
+
+}/* animations.css */

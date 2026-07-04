@@ -1,0 +1,194 @@
+/* ==========================================================
+                        LAYOUT.CSS
+                Расположение основных блоков
+==========================================================*/
+
+
+/* ==========================================================
+                        BODY
+==========================================================*/
+
+body{
+
+    display:flex;
+
+    background:var(--color-background);
+
+    overflow:hidden;
+
+}
+
+
+/* ==========================================================
+                        ЗВЁЗДНЫЙ ФОН
+==========================================================*/
+
+#stars{
+
+    position:fixed;
+
+    inset:0;
+
+    width:100%;
+
+    height:100%;
+
+    z-index:var(--z-background);
+
+    pointer-events:none;
+
+}
+
+
+/* ==========================================================
+                        MAIN
+==========================================================*/
+
+.main {
+    flex: 1;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    padding-right: 0;
+    transition: padding 0.3s cubic-bezier(.22,1,.36,1);
+}
+
+
+/* ==========================================================
+                    ОБЛАСТЬ СООБЩЕНИЙ
+==========================================================*/
+
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: var(--space-48) var(--space-32) var(--space-16);
+    /* нижний отступ уменьшаем, т.к. поле ввода теперь внутри */
+}
+
+/* ==========================================================
+                    КОНТЕЙНЕР СООБЩЕНИЙ
+==========================================================*/
+
+.messages>*{
+
+    width:100%;
+
+}
+
+
+/* ==========================================================
+                        ПРИВЕТСТВИЕ
+==========================================================*/
+
+.welcome{
+
+    margin:auto;
+
+    text-align:center;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:var(--space-16);
+
+    user-select:none;
+
+}
+
+
+.welcome h2{
+
+    font-size:52px;
+
+    font-weight:300;
+
+    letter-spacing:-2px;
+
+}
+
+
+.welcome p{
+
+    font-size:18px;
+
+    color:var(--color-text-secondary);
+
+}
+
+
+/* ==========================================================
+                    ПОЛЕ ВВОДА
+==========================================================*/
+
+.prompt {
+    width: 100%;
+    max-width: 820px;          /* желаемая ширина */
+    margin: 0 auto;            /* центрирование */
+    padding: 8px 12px;         /* уменьшенные отступы */
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);       /* уменьшенный gap */
+    background: rgba(16,16,16,.75);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-medium);
+    flex-shrink: 0;
+    margin-bottom: 24px;
+}
+
+/* ==========================================================
+                СКРЫТАЯ БОКОВАЯ ПАНЕЛЬ
+==========================================================*/
+
+.sidebar.hide + .main{
+
+    margin-left:0;
+
+}
+
+
+/* ==========================================================
+                    АДАПТАЦИЯ
+==========================================================*/
+
+@media (max-width:900px){
+
+    .main{
+
+        margin-left:0;
+
+    }
+
+    .messages{
+
+        padding:
+
+            var(--space-32)
+
+            var(--space-20)
+
+            160px;
+
+    }
+
+    
+    .prompt {
+        max-width: 100%;
+        margin: 0;
+        border-radius: var(--radius-large);
+    }
+
+}/* layout.css */
+.app.left-open .main {
+    padding-left: var(--sidebar-width); /* 290px */
+}
+.app.right-open .main {
+    padding-right: var(--sidebar-width); /* 290px */
+}
