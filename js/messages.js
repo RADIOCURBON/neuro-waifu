@@ -17,9 +17,6 @@ async function sendMessage() {
     addMessageToChat("user", text);
     messageInput.value = "";
 
-    // Индикатор загрузки (опционально)
-    // addMessageToChat("assistant", "⏳ Думаю...");
-
     try {
         const response = await fetch(APP_CONFIG.api.url, {
             method: "POST",
@@ -30,7 +27,7 @@ async function sendMessage() {
             body: JSON.stringify({
                 model: APP_CONFIG.api.model,
                 messages: [
-                    { role: "system", content: "Ты — полезный и дружелюбный ассистент NeuroWaifu." },
+                    { role: "system", content: "Ты — дружелюбный ассистент NeuroWaifu." },
                     { role: "user", content: text }
                 ],
                 max_tokens: 512,
