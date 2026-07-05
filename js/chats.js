@@ -14,8 +14,8 @@ let chatCounter = 1;
                     ЗАГРУЗКА / СОХРАНЕНИЕ
 ==========================================================*/
 
-function loadChatsFromStorage() {
-    const data = loadChats();
+async function loadChatsFromStorage() {
+    const data = await loadChats();
     if (data && data.length) {
         chats = data;
         const maxNum = chats.reduce((max, c) => {
