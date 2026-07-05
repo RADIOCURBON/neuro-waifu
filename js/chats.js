@@ -262,10 +262,8 @@ newChatButton.addEventListener("click", () => {
                     ИНИЦИАЛИЗАЦИЯ
 ==========================================================*/
 
-if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", () => {
-        if (chats.length === 0) loadChatsFromStorage();
-    });
-} else {
-    if (chats.length === 0) loadChatsFromStorage();
-}
+auth.onAuthStateChanged((user) => {
+    if (user && chats.length === 0) {
+        loadChatsFromStorage();
+    }
+});
