@@ -49,9 +49,11 @@
             
 
 <div class="sidebar-footer">
-    <button class="sidebar-item" type="button">
-        <span class="sidebar-item-icon">👤</span>
-        Профиль
+<button class="sidebar-item" type="button" id="profileBtn">
+        <img id="profilePhoto" class="sidebar-item-icon" src="" alt=""
+             style="width:20px; height:20px; border-radius:50%; display:none; object-fit:cover;">
+        <span id="profileIconFallback" class="sidebar-item-icon">👤</span>
+        <span id="profileName">Профиль</span>
     </button>
     <button class="sidebar-item" type="button">
         <span class="sidebar-item-icon">⚙</span>
@@ -111,7 +113,32 @@
 <script src="js/speech.js"></script>
 <script src="js/right-panel.js"></script>
 <script src="js/app.js"></script>
+<script>
+      auth.onAuthStateChanged((user) => {
+        if (!user) {
+          window.location.href = 'login.html';
+          return;
+        }
 
+        // Имя: Google даёт настоящее имя, у email-аккаунтов берём часть до @
+        document.getElementById('profileName').textContent =
+          user.displayName || user.email.split('@')[0];
+
+        // Фото: есть только у Google-аккаунтов
+        if (user.photoURL) {
+          document.getElementById('profilePhoto').src = user.photoURL;
+          document.getElementById('profilePhoto').style.display = 'inline-block';
+          document.getElementById('profileIconFallback').style.display = 'none';
+        }
+      });
+
+      // (по желанию) клик по кнопке "Профиль" -> выход из аккаунта
+      document.getElementById('profileBtn').addEventListener('click', () => {
+        if (confirm('Выйти из аккаунта?')) {
+          auth.signOut().then(() => window.location.href = 'login.html');
+        }
+      });
+    </script>
 </body>
 
 </html>
