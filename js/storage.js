@@ -1,35 +1,51 @@
-/* ==========================================================
-                    STORAGE.JS (исправленный)
-==========================================================*/
-
-function getChatsKey() {
-    return APP_CONFIG.storage.chatsKey;
+function getUserChatsDocRef() {
+    const user = auth.currentUser;
+    if (!user) return null;
+    return db.collection("userChats").doc(user.uid);
 }
 
 function getSettingsKey() {
     return APP_CONFIG.storage.settingsKey;
 }
 
-function saveChats() {
+async function saveChats() {
     try {
-        const data = JSON.stringify(chats);
-        localStorage.setItem(getChatsKey(), data);
-        if (DEBUG) console.log("✅ Чаты сохранены:", chats.length);
+        const docRef = getUserChatsDocRef();
+        if (!docRef) return;
+
+        await docRef.set({
+            chats: JSON.stringify(chats),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        if (typeof DEBUG !== "undefined" && DEBUG) {
+            console.log("✅ Чаты сохранены в Firestore:", chats.length);
+        }
     } catch (error) {
         console.error("❌ Ошибка сохранения чатов:", error);
     }
 }
 
-function loadChats() {
+async function loadChats() {
     try {
-        const raw = localStorage.getItem(getChatsKey());
+        const docRef = getUserChatsDocRef();
+        if (!docRef) return null;
+
+        const snap = await docRef.get();
+        if (!snap.exists) return null;
+
+        const raw = snap.data().chats;
         if (!raw) return null;
+
         const data = JSON.parse(raw);
         if (!Array.isArray(data)) {
-            console.warn("⚠️ Данные из localStorage не являются массивом, сброс.");
+            console.warn("⚠️ Данные из Firestore не являются массивом, сброс.");
             return null;
         }
-        if (DEBUG) console.log("✅ Чаты загружены:", data.length);
+
+        if (typeof DEBUG !== "undefined" && DEBUG) {
+            console.log("✅ Чаты загружены из Firestore:", data.length);
+        }
         return data;
     } catch (error) {
         console.error("❌ Ошибка загрузки чатов:", error);
@@ -56,11 +72,12 @@ function loadSettings() {
     }
 }
 
-function clearChats() {
-    localStorage.removeItem(getChatsKey());
+async function clearChats() {
+    const docRef = getUserChatsDocRef();
+    if (docRef) await docRef.delete();
 }
 
 function clearStorage() {
-    localStorage.removeItem(getChatsKey());
+    clearChats();
     localStorage.removeItem(getSettingsKey());
 }
