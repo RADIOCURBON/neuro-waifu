@@ -87,6 +87,7 @@ function loadChatMessages(chatId) {
         chat.messages.forEach(msg => {
             addMessageToDOM(msg.role, msg.text);
         });
+        applyMessageVisibility();  // <-- ДОБАВЛЕНА ЭТА СТРОКА
         scrollToBottom(container);
     }
 }
@@ -98,6 +99,7 @@ function addMessageToChat(role, text) {
     const welcome = document.querySelector('.welcome');
     if (welcome) welcome.remove();
     addMessageToDOM(role, text);
+    applyMessageVisibility();  // <-- ДОБАВЛЕНА ЭТА СТРОКА
     saveChatsToStorage();
     scrollToBottom(document.getElementById("messages"));
     if (typeof updateRightPanel === "function") {
@@ -267,3 +269,36 @@ auth.onAuthStateChanged((user) => {
         loadChatsFromStorage();
     }
 });
+/* ================================================================
+                    ПОКАЗАТЬ ТОЛЬКО ПОСЛЕДНИЕ СООБЩЕНИЯ
+================================================================*/
+
+function applyMessageVisibility() {
+    const container = document.getElementById("messages");
+    if (!container) return;
+
+    const allMessages = container.querySelectorAll(".message");
+    const total = allMessages.length;
+    const VISIBLE_COUNT = 3; // показываем последние 3
+
+    allMessages.forEach((msg, index) => {
+        // Убираем все старые классы
+        msg.classList.remove("fade-strong", "fade-medium", "fade-none", "hidden-msg");
+
+        const fromEnd = total - index; // позиция с конца (1 = последнее)
+
+        if (fromEnd > VISIBLE_COUNT) {
+            // Скрываем полностью
+            msg.classList.add("hidden-msg");
+        } else if (fromEnd === VISIBLE_COUNT) {
+            // Самое старое видимое — сильное затухание
+            msg.classList.add("fade-strong");
+        } else if (fromEnd === VISIBLE_COUNT - 1) {
+            // Среднее — среднее затухание
+            msg.classList.add("fade-medium");
+        } else {
+            // Самое новое — без затухания
+            msg.classList.add("fade-none");
+        }
+    });
+}
