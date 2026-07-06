@@ -68,6 +68,10 @@ function loadRightMessages() {
     });
     scrollToBottom(rightMessagesContainer);
 }
+rightSidebar.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    rightMessagesContainer.scrollTop += e.deltaY;
+}, { passive: false });
 
 // Экспортируем
 window.initRightSidebar = initRightSidebar;
