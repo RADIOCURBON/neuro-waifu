@@ -43,31 +43,51 @@ body{
 /* ==========================================================
                         MAIN
 ==========================================================*/
-
 .main {
     flex: 1;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end; /* всё прижимается к низу */
     padding-left: 0;
     padding-right: 0;
     transition: padding 0.3s cubic-bezier(.22,1,.36,1);
 }
-
 
 /* ==========================================================
                     ОБЛАСТЬ СООБЩЕНИЙ
 ==========================================================*/
 
 .messages {
-    flex: 1;
-    overflow-y: auto;
+    /* Больше не flex:1 — фиксированная высота 25% экрана */
+    flex: none;
+    height: 25vh;
+    overflow: hidden;  /* скролл убираем — показываем только последние */
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;  /* сообщения прижаты к низу */
     align-items: stretch;
-    padding: var(--space-48) var(--space-32) var(--space-16);
-    /* нижний отступ уменьшаем, т.к. поле ввода теперь внутри */
+    padding: 0 var(--space-32) var(--space-16);
+    position: relative;
+
+    /* Маска растворения: верхние сообщения уходят в прозрачность */
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0,0,0,0.1) 10%,
+        rgba(0,0,0,0.4) 25%,
+        rgba(0,0,0,0.75) 45%,
+        black 65%
+    );
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0,0,0,0.1) 10%,
+        rgba(0,0,0,0.4) 25%,
+        rgba(0,0,0,0.75) 45%,
+        black 65%
+    );
 }
 
 /* ==========================================================
@@ -86,19 +106,16 @@ body{
 ==========================================================*/
 
 .welcome{
-
     margin:auto;
-
     text-align:center;
-
     display:flex;
-
     flex-direction:column;
-
     gap:var(--space-16);
-
     user-select:none;
-
+    /* Приветствие центрируется в оставшемся пространстве */
+    flex: 1;
+    justify-content: center;
+    align-items: center;
 }
 
 
@@ -170,11 +187,8 @@ body{
 
         padding:
 
-            var(--space-32)
-
-            var(--space-20)
-
-            160px;
+        padding: 0 var(--space-20) var(--space-8);
+        height: 25vh;
 
     }
 
