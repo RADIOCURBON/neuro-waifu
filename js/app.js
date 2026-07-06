@@ -7,6 +7,5 @@ function init() {
     if (typeof initRightSidebar === "function") {
         initRightSidebar();
     }
-    
 }
 document.addEventListener("DOMContentLoaded", init);
