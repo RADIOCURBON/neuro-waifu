@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Помощь — NeuroWaifu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ==========================================================
+                                RESET
+        ========================================================== */
+        *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+        html { font-size:16px; scroll-behavior:smooth; }
+
+        body {
+            min-height:100vh;
+            background:#0a0a0a;
+            color:rgba(255,255,255,.88);
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+            font-size:15px;
+            font-weight:400;
+            line-height:1.5;
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
+            overflow-x:hidden;
+        }
+
+        ::selection { background:rgba(255,255,255,.15); color:#fff; }
+
+        ::-webkit-scrollbar { width:5px; }
+        ::-webkit-scrollbar-track { background:transparent; }
+        ::-webkit-scrollbar-thumb { background:rgba(255,255,255,.08); border-radius:3px; }
+        ::-webkit-scrollbar-thumb:hover { background:rgba(255,255,255,.15); }
+
+        a { color:inherit; text-decoration:none; }
+        button { background:none; border:none; color:inherit; font:inherit; cursor:pointer; outline:none; }
+
+        /* ==========================================================
+                            CANVAS — ЗВЁЗДНЫЙ ФОН
+        ========================================================== */
+        #stars {
+            position:fixed; inset:0;
+            width:100%; height:100%;
+            z-index:0; pointer-events:none;
+        }
+
+        /* ==========================================================
+                                PAGE
+        ========================================================== */
+        .page {
+            position:relative; z-index:1;
+            min-height:100vh;
+            display:flex; flex-direction:column;
+        }
+
+        /* ==========================================================
+                                HEADER
+        ========================================================== */
+        .header {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:20px 40px;
+        }
+        .header-logo {
+            display:flex; align-items:center; gap:10px;
+            transition:opacity .2s;
+        }
+        .header-logo:hover { opacity:.8; }
+        .header-icon {
+            width:34px; height:34px;
+            border-radius:10px;
+            background:rgba(255,255,255,.05);
+            border:1px solid rgba(255,255,255,.07);
+            display:flex; align-items:center; justify-content:center;
+        }
+        .header-icon svg { width:15px; height:15px; color:rgba(255,255,255,.6); }
+        .header-name {
+            font-size:15px; font-weight:500;
+            color:rgba(255,255,255,.75);
+            letter-spacing:-.3px;
+        }
+        .header-back {
+            font-size:13px; color:rgba(255,255,255,.35);
+            transition:color .2s;
+        }
+        .header-back:hover { color:rgba(255,255,255,.7); }
+
+        /* ==========================================================
+                                HERO
+        ========================================================== */
+        .hero {
+            text-align:center;
+            padding:60px 24px 40px;
+            animation:heroIn .8s ease-out forwards;
+        }
+        .hero h1 {
+            font-size:clamp(36px,6vw,52px);
+            font-weight:300;
+            color:#fff;
+            letter-spacing:-2px;
+            line-height:1.1;
+            margin-bottom:12px;
+        }
+        .hero p {
+            font-size:17px; font-weight:300;
+            color:rgba(255,255,255,.38);
+        }
+
+        @keyframes heroIn {
+            from { opacity:0; transform:translateY(18px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+
+        /* ==========================================================
+                            GLASS CARD
+        ========================================================== */
+        .glass {
+            background:rgba(16,16,16,.75);
+            backdrop-filter:blur(20px);
+            -webkit-backdrop-filter:blur(20px);
+            border:1px solid rgba(255,255,255,.06);
+            border-radius:18px;
+            box-shadow:0 8px 32px rgba(0,0,0,.4);
+        }
+
+        /* ==========================================================
+                                FAQ
+        ========================================================== */
+        .faq-section {
+            max-width:680px; width:100%;
+            margin:0 auto; padding:0 20px 60px;
+        }
+
+        .faq-item {
+            opacity:0;
+            animation:faqIn .45s ease-out forwards;
+        }
+        @keyframes faqIn {
+            from { opacity:0; transform:translateY(8px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+
+        .faq-btn {
+            width:100%; display:flex; align-items:center;
+            justify-content:space-between; gap:16px;
+            padding:18px 24px;
+            background:none; border:none; cursor:pointer;
+            text-align:left; font:inherit;
+            color:rgba(255,255,255,.88);
+            transition:background .15s;
+        }
+        .faq-btn:hover { background:rgba(255,255,255,.02); }
+
+        .faq-btn span {
+            font-size:15px; font-weight:500;
+            color:rgba(255,255,255,.88);
+        }
+
+        .faq-icon {
+            flex-shrink:0;
+            width:24px; height:24px;
+            border-radius:50%;
+            background:rgba(255,255,255,.05);
+            display:flex; align-items:center; justify-content:center;
+            transition:transform .3s ease;
+        }
+        .faq-icon svg { width:11px; height:11px; color:rgba(255,255,255,.5); }
+
+        .faq-item.open .faq-icon { transform:rotate(45deg); }
+
+        .faq-answer {
+            max-height:0; overflow:hidden; opacity:0;
+            transition:max-height .35s ease, opacity .3s ease, padding .3s ease;
+            padding:0 24px;
+        }
+        .faq-item.open .faq-answer {
+            max-height:260px; opacity:1;
+            padding:0 24px 18px;
+        }
+
+        .faq-answer p {
+            font-size:14px; line-height:1.65;
+            color:rgba(255,255,255,.42);
+        }
+
+        .faq-divider {
+            height:1px; margin:0 24px;
+            background:rgba(255,255,255,.04);
+        }
+
+        /* ==========================================================
+                              CONTACT
+        ========================================================== */
+        .contact-section {
+            max-width:680px; width:100%;
+            margin:0 auto; padding:0 20px 80px;
+            opacity:0;
+            animation:contactIn .7s ease-out .25s forwards;
+        }
+        @keyframes contactIn {
+            from { opacity:0; transform:translateY(20px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+
+        .contact-header { text-align:center; margin-bottom:28px; }
+        .contact-header h2 {
+            font-size:28px; font-weight:300;
+            color:#fff; letter-spacing:-1px;
+            margin-bottom:8px;
+        }
+        .contact-header p { font-size:14px; color:rgba(255,255,255,.32); }
+
+        .form-grid {
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:14px;
+        }
+
+        .form-group { margin-bottom:14px; }
+
+        .form-label {
+            display:block; margin-bottom:7px;
+            font-size:11px; font-weight:500;
+            text-transform:uppercase;
+            letter-spacing:1.2px;
+            color:rgba(255,255,255,.28);
+        }
+
+        .form-input {
+            width:100%;
+            padding:12px 16px;
+            border-radius:12px;
+            font:inherit; font-size:14px;
+            color:#fff;
+            background:rgba(255,255,255,.04);
+            border:1px solid rgba(255,255,255,.06);
+            outline:none;
+            transition:border-color .2s, background .2s;
+            resize:none;
+        }
+        .form-input::placeholder { color:rgba(255,255,255,.18); }
+        .form-input:focus {
+            border-color:rgba(255,255,255,.15);
+            background:rgba(255,255,255,.06);
+        }
+
+        .form-submit {
+            width:100%;
+            padding:13px;
+            border-radius:12px;
+            font:inherit; font-size:14px; font-weight:600;
+            color:rgba(255,255,255,.85);
+            background:rgba(255,255,255,.07);
+            border:1px solid rgba(255,255,255,.1);
+            cursor:pointer;
+            transition:background .2s, border-color .2s, transform .1s;
+            margin-top:4px;
+        }
+        .form-submit:hover {
+            background:rgba(255,255,255,.12);
+            border-color:rgba(255,255,255,.18);
+        }
+        .form-submit:active { transform:scale(.97); }
+
+        .form-footer {
+            margin-top:22px; padding-top:18px;
+            border-top:1px solid rgba(255,255,255,.04);
+            text-align:center;
+        }
+        .form-footer p {
+            font-size:13px; color:rgba(255,255,255,.22);
+            margin-bottom:4px;
+        }
+        .form-footer a {
+            font-size:14px; color:rgba(255,255,255,.45);
+            transition:color .2s;
+        }
+        .form-footer a:hover { color:rgba(255,255,255,.75); }
+
+        /* ==========================================================
+                              FOOTER
+        ========================================================== */
+        .site-footer {
+            padding:24px; text-align:center;
+        }
+        .site-footer p {
+            font-size:12px; color:rgba(255,255,255,.12);
+            letter-spacing:.5px;
+        }
+
+        /* ==========================================================
+                              MOBILE
+        ========================================================== */
+        @media (max-width:640px) {
+            .header { padding:16px 20px; }
+            .hero { padding:40px 20px 30px; }
+            .form-grid { grid-template-columns:1fr; }
+            .faq-btn { padding:16px 18px; }
+            .faq-btn span { font-size:14px; }
+            .faq-answer { padding:0 18px; }
+            .faq-item.open .faq-answer { padding:0 18px 16px; }
+            .faq-divider { margin:0 18px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ЗВЁЗДНЫЙ ФОН -->
+    <canvas id="stars"></canvas>
+
+    <div class="page">
+
+        <!-- HEADER -->
+        <header class="header">
+            <a href="index.html" class="header-logo">
+                <div class="header-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                        <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                    </svg>
+                </div>
+                <div class="header-name">NeuroWaifu</div>
+            </a>
+            <a href="#contact" class="header-back">Связаться с нами</a>
+        </header>
+
+        <!-- HERO -->
+        <div class="hero">
+            <h1>Помощь.</h1>
+            <p>Ответы на частые вопросы и связь с нами</p>
+        </div>
+
+        <!-- FAQ -->
+        <section class="faq-section">
+            <div class="glass" id="faq-container"></div>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="contact-section" id="contact">
+            <div class="contact-header">
+                <h2>Напишите нам</h2>
+                <p>Ответим на вашу почту в течение 24 часов</p>
+            </div>
+
+            <div class="glass" style="padding:28px 28px 24px">
+                <form id="contactForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Имя</label>
+                            <input class="form-input" type="text" placeholder="Ваше имя" required id="fieldName">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input class="form-input" type="email" placeholder="you@example.com" required id="fieldEmail">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Сообщение</label>
+                        <textarea class="form-input" rows="4" placeholder="Опишите ваш вопрос..." required id="fieldMsg"></textarea>
+                    </div>
+                    <button class="form-submit" type="submit" id="submitBtn">Отправить</button>
+                </form>
+                <div class="form-footer">
+                    <p>Или напишите напрямую</p>
+                    <a href="mailto:support@neurowaifu.com">support@neurowaifu.com</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <p>© 2025 NeuroWaifu — AI-ассистент</p>
+        </footer>
+
+    </div>
+
+
+    <!-- ==========================================================
+                          JAVASCRIPT
+    ========================================================== -->
+    <script>
+
+        /* ==========================================================
+                    STARS.JS — Звёздный фон + параллакс
+        ========================================================== */
+
+        (function() {
+            var canvas = document.getElementById('stars');
+            var ctx = canvas.getContext('2d');
+
+            var W = canvas.width = window.innerWidth;
+            var H = canvas.height = window.innerHeight;
+            var mx = 0, my = 0;
+
+            var COUNT = 300;
+            var stars = [];
+
+            function makeStars() {
+                stars = [];
+                for (var i = 0; i < COUNT; i++) {
+                    stars.push({
+                        x: Math.random() * W,
+                        y: Math.random() * H,
+                        r: Math.random() * 1.6,
+                        a: Math.random(),
+                        s: 0.002 + Math.random() * 0.01,
+                        d: Math.random() > 0.5 ? 1 : -1,
+                        dp: Math.random() * 1.5 + 0.2
+                    });
+                }
+            }
+
+            function tick() {
+                ctx.clearRect(0, 0, W, H);
+                for (var i = 0; i < stars.length; i++) {
+                    var s = stars[i];
+                    s.a += s.s * s.d;
+                    if (s.a >= 1) { s.a = 1; s.d = -1; }
+                    if (s.a <= 0.1) {
+                        s.a = 0.1; s.d = 1;
+                        s.x = Math.random() * W;
+                        s.y = Math.random() * H;
+                    }
+                    ctx.beginPath();
+                    ctx.arc(s.x + mx * s.dp, s.y + my * s.dp, s.r, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255,255,255,' + s.a + ')';
+                    ctx.fill();
+                }
+                requestAnimationFrame(tick);
+            }
+
+            window.addEventListener('resize', function() {
+                W = canvas.width = window.innerWidth;
+                H = canvas.height = window.innerHeight;
+                makeStars();
+            });
+
+            window.addEventListener('mousemove', function(e) {
+                mx = (e.clientX - W / 2) / 60;
+                my = (e.clientY - H / 2) / 60;
+            });
+
+            makeStars();
+            tick();
+        })();
+
+
+        /* ==========================================================
+                        FAQ — аккордеон
+        ========================================================== */
+
+        (function() {
+            var faq = [
+                {
+                    q: 'Что такое NeuroWaifu?',
+                    a: 'NeuroWaifu — это AI-ассистент нового поколения, который общается с вами в формате чата. Он использует современные языковые модели для генерации ответов, помогает решать задачи, отвечает на вопросы и поддерживает разговор на любые темы.'
+                },
+                {
+                    q: 'Как начать пользоваться?',
+                    a: 'Зарегистрируйтесь на сайте, войдите в аккаунт и начните новый чат. Просто введите сообщение в поле ввода — NeuroWaifu ответит вам в течение нескольких секунд. Вы также можете использовать голосовой ввод.'
+                },
+                {
+                    q: 'Какие модели AI используются?',
+                    a: 'NeuroWaifu поддерживает различные языковые модели, включая DeepSeek и другие. Модель можно выбрать в настройках правой панели. Каждая модель имеет свои особенности скорости и качества ответов.'
+                },
+                {
+                    q: 'Мои данные в безопасности?',
+                    a: 'Да. Мы используем шифрование данных и не передаём вашу переписку третьим лицам. История чатов хранится локально в вашем браузере. Вы можете удалить любой чат в любой момент.'
+                },
+                {
+                    q: 'Есть ли ограничения по количеству сообщений?',
+                    a: 'На данный момент ограничений нет. Мы стремимся предоставить максимально свободный доступ к AI-ассистенту. В будущем могут появиться тарифные планы с дополнительными возможностями.'
+                },
+                {
+                    q: 'Как работает голосовой ввод?',
+                    a: 'Нажмите на иконку микрофона рядом с полем ввода. Браузер запросит разрешение на доступ к микрофону. После этого говорите — ваша речь будет автоматически преобразована в текст и отправлена NeuroWaifu.'
+                },
+                {
+                    q: 'Поддерживаются ли мобильные устройства?',
+                    a: 'Да, NeuroWaifu полностью адаптирован для мобильных устройств. Интерфейс автоматически подстраивается под размер экрана. Все функции, включая голосовой ввод, доступны на смартфонах и планшетах.'
+                },
+                {
+                    q: 'Не нашли ответ на свой вопрос?',
+                    a: 'Напишите нам на электронную почту — мы ответим в течение 24 часов. Форма для связи находится ниже на этой странице. Мы рады помочь с любым вопросом!'
+                }
+            ];
+
+            var container = document.getElementById('faq-container');
+
+            for (var i = 0; i < faq.length; i++) {
+                var item = faq[i];
+
+                var div = document.createElement('div');
+                div.className = 'faq-item';
+                div.style.animationDelay = (i * 0.07) + 's';
+
+                div.innerHTML =
+                    '<button class="faq-btn">' +
+                        '<span>' + item.q + '</span>' +
+                        '<div class="faq-icon">' +
+                            '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">' +
+                                '<path d="M6 1v10M1 6h10"/>' +
+                            '</svg>' +
+                        '</div>' +
+                    '</button>' +
+                    '<div class="faq-answer"><p>' + item.a + '</p></div>';
+
+                (function(el) {
+                    el.querySelector('.faq-btn').addEventListener('click', function() {
+                        el.classList.toggle('open');
+                    });
+                })(div);
+
+                container.appendChild(div);
+
+                if (i < faq.length - 1) {
+                    var hr = document.createElement('div');
+                    hr.className = 'faq-divider';
+                    container.appendChild(hr);
+                }
+            }
+        })();
+
+
+        /* ==========================================================
+                        FORM — mailto
+        ========================================================== */
+
+        (function() {
+            var form = document.getElementById('contactForm');
+            var btn  = document.getElementById('submitBtn');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                var n   = document.getElementById('fieldName').value;
+                var em  = document.getElementById('fieldEmail').value;
+                var msg = document.getElementById('fieldMsg').value;
+
+                var subj = encodeURIComponent('NeuroWaifu — Вопрос от ' + n);
+                var body = encodeURIComponent('Имя: ' + n + '\nEmail: ' + em + '\n\n' + msg);
+
+                window.location.href = 'mailto:support@neurowaifu.com?subject=' + subj + '&body=' + body;
+
+                btn.textContent = '✓ Открываем почтовый клиент…';
+                setTimeout(function() { btn.textContent = 'Отправить'; }, 3500);
+            });
+        })();
+
+    </script>
+
+</body>
+</html>
