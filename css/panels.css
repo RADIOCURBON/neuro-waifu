@@ -46,11 +46,14 @@
 /* Контейнер сообщений внутри правой панели */
 .right-messages {
     flex: 1;
+    min-height: 0;            /* ВАЖНО: без этого flex-child не сжимается и скролл не работает */
     overflow-y: auto;
-    padding: var(--space-16);
+    overflow-x: hidden;
+    padding: 8px 12px 16px;
     display: flex;
     flex-direction: column;
-    gap: var(--space-12);
+    gap: 6px;                  /* компактнее — было 12px */
+    scroll-behavior: smooth;
 }
 
 .right-messages .message {
@@ -60,8 +63,9 @@
 
 .right-messages .message-content {
     max-width: 100%;
-    font-size: 14px;
-    padding: 10px 12px;
+    font-size: 12px;           /* было 14px — теперь компактнее */
+    line-height: 1.45;         /* чуть плотнее, но читаемо */
+    padding: 6px 10px;         /* было 10px 12px — компактнее */
 }
 /* Кнопка переключения правой панели (всегда видна) */
 #toggleRightSidebar {
