@@ -102,3 +102,30 @@
 .message-content:hover {
     filter: brightness(1.05);
 }
+/* ================================================================
+                    РАСТВОРЕНИЕ СТАРЫХ СООБЩЕНИЙ
+================================================================*/
+
+/* Самое старое видимое сообщение — почти прозрачное */
+.message.fade-strong {
+    opacity: 0.3;
+    filter: blur(0.5px);
+    transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+/* Среднее сообщение — полупрозрачное */
+.message.fade-medium {
+    opacity: 0.6;
+    transition: opacity 0.4s ease;
+}
+
+/* Самое новое — полностью видно */
+.message.fade-none {
+    opacity: 1;
+    transition: opacity 0.4s ease;
+}
+
+/* Скрытые сообщения — полностью невидимы */
+.message.hidden-msg {
+    display: none !important;
+}
