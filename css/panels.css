@@ -46,14 +46,29 @@
 /* Контейнер сообщений внутри правой панели */
 .right-messages {
     flex: 1;
-    min-height: 0;            /* ВАЖНО: без этого flex-child не сжимается и скролл не работает */
-    overflow-y: auto;
+    min-height: 0;        /* КЛЮЧЕВОЕ: без этого flex не сжимается */
+    overflow-y: auto;     /* Включаем вертикальный скролл */
     overflow-x: hidden;
     padding: 8px 12px 16px;
     display: flex;
     flex-direction: column;
-    gap: 6px;                  /* компактнее — было 12px */
+    gap: 6px;             /* Было 12px — теперь компактнее */
     scroll-behavior: smooth;
+}
+
+/* Кастомный скроллбар для правой панели */
+.right-messages::-webkit-scrollbar {
+    width: 6px;
+}
+.right-messages::-webkit-scrollbar-track {
+    background: transparent;
+}
+.right-messages::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+}
+.right-messages::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.2);
 }
 
 .right-messages .message {
@@ -63,9 +78,9 @@
 
 .right-messages .message-content {
     max-width: 100%;
-    font-size: 12px;           /* было 14px — теперь компактнее */
-    line-height: 1.45;         /* чуть плотнее, но читаемо */
-    padding: 6px 10px;         /* было 10px 12px — компактнее */
+    font-size: 12px;        /* Было 14px */
+    line-height: 1.45;      /* Читаемо, но компактно */
+    padding: 6px 10px;      /* Было 10px 12px */
 }
 /* Кнопка переключения правой панели (всегда видна) */
 #toggleRightSidebar {
