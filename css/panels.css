@@ -46,14 +46,15 @@
 /* Контейнер сообщений внутри правой панели */
 .right-messages {
     flex: 1;
-    min-height: 0;        /* КЛЮЧЕВОЕ: без этого flex не сжимается */
-    overflow-y: auto;     /* Включаем вертикальный скролл */
+    min-height: 0;
+    overflow-y: auto;
     overflow-x: hidden;
     padding: 8px 12px 16px;
     display: flex;
     flex-direction: column;
-    gap: 6px;             /* Было 12px — теперь компактнее */
+    gap: 6px;
     scroll-behavior: smooth;
+    overscroll-behavior: contain;  /* ← ДОБАВЬ */
 }
 
 /* Кастомный скроллбар для правой панели */
